@@ -1,12 +1,25 @@
 package com.example.hwOneToMany.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name=  "folders")
 public class Folder {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name= "user_id", nullable = false)
     private User user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "folder")
     private List<File> files;
 
     public Folder(User user) {
